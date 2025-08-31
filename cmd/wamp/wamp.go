@@ -13,6 +13,7 @@ import (
 
 	"github.com/aziyan99/wamp/pkg/apache"
 	"github.com/aziyan99/wamp/pkg/php"
+	"github.com/aziyan99/wamp/pkg/site"
 	"github.com/aziyan99/wamp/pkg/util"
 )
 
@@ -585,6 +586,89 @@ func main() {
 			}
 
 			util.PrintLog("INFO").Println("MySQL stopped")
+
+		default:
+			fmt.Printf("Unknown command: %s\n", args[0])
+			os.Exit(1)
+		}
+	case "site":
+		if err = loadConf(); err != nil {
+			util.PrintLog("ERROR").Panic(err)
+		}
+
+		util.PrintLog("INFO").Printf("Use Apache: %s\n", activeApache)
+		util.PrintLog("INFO").Printf("Use MySQL: %s\n", activeMysql)
+
+		// site add <name>.<domain> <php-full-version-name>
+		// format <name>.<domain>
+		switch args[1] {
+		case "add":
+			// TODO: Validate sitename must include domain
+			// TODO: Accept project type (e.g., laravel, wordpress, moodle)
+
+			sitename := args[2]
+			phpVersion := args[3]
+			selectedPHPPath := path.Join(phpDir, phpVersion)
+			siteDir := path.Join(wwwDir, sitename)
+			siteConf := path.Join(apacheDir, activeApache, "conf", "sites-enabled", sitename+".conf")
+
+			isDirSiteExists, err := util.DirExists(siteDir)
+			if err != nil {
+				util.PrintLog("ERROR").Fatalf("%v\n", err)
+			}
+
+			if isDirSiteExists {
+				util.PrintLog("ERROR").Fatalf("site: %s dir exists\n", siteDir)
+			}
+
+			_, err = os.Stat(siteConf)
+			if err == nil {
+				util.PrintLog("ERROR").Fatalf("site: %s conf exists\n", sitename+".conf")
+			}
+
+			isPHPExists, err := util.DirExists(selectedPHPPath)
+			if err != nil {
+				util.PrintLog("ERROR").Fatalf("%v\n", err)
+			}
+
+			if !isPHPExists {
+				util.PrintLog("ERROR").Fatalf("php: %s do not exists\n", selectedPHPPath)
+			}
+
+			if err = os.Mkdir(siteDir, 0755); err != nil {
+				util.PrintLog("ERROR").Fatalf("unable to create site dir: %v\n", err)
+			}
+
+			// TODO: Write <site>.conf
+			confFileValue := []byte(site.SiteVHostStub(siteDir, sitename, selectedPHPPath))
+			if err = os.WriteFile(siteConf, confFileValue, 0755); err != nil {
+				util.PrintLog("ERROR").Panic(err)
+			}
+
+			// TODO: Handle site with SSL
+
+			// TODO: Write to hosts file, for now we will ask the user to add the domain manually to the windows hosts file
+			util.PrintLog("INFO").Printf("Site '%s' created. Please add '127.0.0.1 %s' to your windows hosts file.\n", sitename, sitename)
+
+		case "rm":
+
+			sitename := args[2]
+			siteDir := path.Join(wwwDir, sitename)
+			siteConf := path.Join(apacheDir, activeApache, "conf", "sites-enabled", sitename+".conf")
+
+			util.PrintLog("INFO").Printf("removing site: %s...\n", sitename)
+
+			if err = os.RemoveAll(siteDir); err != nil {
+				util.PrintLog("ERROR").Panic(err)
+			}
+
+			if err = os.Remove(siteConf); err != nil {
+				util.PrintLog("ERROR").Panic(err)
+			}
+
+			// TODO: Remove site from hosts file
+
+			util.PrintLog("INFO").Printf("site: '%s' removed. Please manually delete line '127.0.0.1 %s' from your windows hosts file.\n", sitename, sitename)
 
 		default:
 			fmt.Printf("Unknown command: %s\n", args[0])
