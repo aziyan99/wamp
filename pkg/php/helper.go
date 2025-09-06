@@ -2,6 +2,7 @@ package php
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"path"
@@ -61,4 +62,23 @@ func SetExtDir(p string) error {
 	}
 
 	return nil
+}
+
+func Search(phpPath, keyword string) (string, error) {
+	diretories, err := os.ReadDir(phpPath)
+	if err != nil {
+		return "", err
+	}
+
+	for _, item := range diretories {
+		if !item.IsDir() {
+			continue
+		}
+
+		if strings.Contains(item.Name(), keyword) {
+			return item.Name(), nil
+		}
+	}
+
+	return "", errors.New("unable to find PHP version " + keyword)
 }
