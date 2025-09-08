@@ -97,7 +97,6 @@ func (m *Manager) Add(sitename string, sslEnable bool) error {
 		return err
 	}
 
-	// TODO: Need to run elevanted
 	hostsManager := hostsrw.New(m.etcDir)
 	err = hostsManager.Add(sitename)
 	if err != nil {
@@ -145,7 +144,6 @@ func (m *Manager) Remove(sitename string) error {
 		}
 	}
 
-	// TODO: Need to run elevanted
 	hostsManager := hostsrw.New(m.etcDir)
 	err := hostsManager.Remove(sitename)
 	if err != nil {

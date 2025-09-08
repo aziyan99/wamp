@@ -271,12 +271,28 @@ func (m *Manager) Install() error {
 
 	util.PrintLog("INFO").Println("hostsrw installed")
 
+	// install composer: https://getcomposer.org/download/latest-stable/composer.phar
+	util.PrintLog("INFO").Println("Installing composer...")
+	err = util.DownloadFile(path.Join(m.binDir, "etc", "composer.phar"), "https://getcomposer.org/download/latest-stable/composer.phar")
+	if err != nil {
+		return err
+	}
+
+	util.PrintLog("INFO").Println("composer installed")
+
 	return nil
 }
 
 func (m *Manager) Clean() error {
 	var err error
 	util.PrintLog("INFO").Println("Cleaning all wamp directories...")
+
+	mkcertUninstallCmd := exec.Command(path.Join(m.binDir, "etc", "mkcert.exe"), "-uninstall")
+	mkcertUninstallCmd.Stdout = os.Stdout
+	err = mkcertUninstallCmd.Run()
+	if err != nil {
+		return err
+	}
 
 	if err = util.CleanDirs(m.binDir, m.tmpDir, m.wwwDir); err != nil {
 		return err
