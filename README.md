@@ -47,7 +47,7 @@ Yet another tool for managing a local WAMP (Windows, Apache, MySQL, PHP) develop
     build\wamp.exe init
     ```
 
-The compiled `wamp.exe` is a standalone executable. You can move it to any directory on your system (e.g., `C:\wamp\`). All the files and folders that `wamp.exe` creates and manages (like `bin`, `www`, `tmp`, and configuration files) will be contained within the same directory as the executable. This makes the entire WAMP environment portable. If it is still not working, sometimes stop-start the apache again or close-open the browser fix it.
+The compiled `wamp.exe` is a standalone executable. You can move it to any directory on your system (e.g., `C:\wamp\`). All the files and folders that `wamp.exe` creates and manages (like `bin`, `www`, `tmp`, and configuration files) will be contained within the same directory as the executable. This makes the entire WAMP environment portable.
 
 
 ## Usage
@@ -127,7 +127,7 @@ All commands are run from the directory containing `wamp.exe`.
 
 ## Configuration
 
-The active versions of Apache and MySQL are configured in the `wamp.ini` file, which is created after running the `install` command.
+The active versions of Apache and MySQL are configured in the `wamp.ini` file, which is created after running the `install` command. If it is still not working, sometimes stop-start the apache again or close-open the browser fix it.
 
 ```ini
 [apache]
