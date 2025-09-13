@@ -7,8 +7,8 @@ import (
 	"os/exec"
 	"path"
 
-	"github.com/aziyan99/wamp/pkg/hostsrw"
-	"github.com/aziyan99/wamp/pkg/util"
+	"github.com/aziyan99/wamp/internal/hostsrw"
+	"github.com/aziyan99/wamp/internal/util"
 )
 
 type Manager struct {

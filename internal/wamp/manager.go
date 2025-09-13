@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/aziyan99/wamp/pkg/apache"
-	"github.com/aziyan99/wamp/pkg/php"
-	"github.com/aziyan99/wamp/pkg/util"
+	"github.com/aziyan99/wamp/internal/apache"
+	"github.com/aziyan99/wamp/internal/php"
+	"github.com/aziyan99/wamp/internal/util"
 )
 
 type Manager struct {

@@ -6,7 +6,7 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/aziyan99/wamp/pkg/util"
+	"github.com/aziyan99/wamp/internal/util"
 )
 
 type Manager struct {

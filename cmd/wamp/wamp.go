@@ -8,12 +8,12 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/aziyan99/wamp/pkg/cli"
-	"github.com/aziyan99/wamp/pkg/manager"
-	"github.com/aziyan99/wamp/pkg/php"
-	"github.com/aziyan99/wamp/pkg/site"
-	"github.com/aziyan99/wamp/pkg/util"
-	"github.com/aziyan99/wamp/pkg/wamp"
+	"github.com/aziyan99/wamp/internal/cli"
+	"github.com/aziyan99/wamp/internal/manager"
+	"github.com/aziyan99/wamp/internal/php"
+	"github.com/aziyan99/wamp/internal/site"
+	"github.com/aziyan99/wamp/internal/util"
+	"github.com/aziyan99/wamp/internal/wamp"
 )
 
 var wampDir string

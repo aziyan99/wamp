@@ -8,7 +8,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/aziyan99/wamp/pkg/util"
+	"github.com/aziyan99/wamp/internal/util"
 )
 
 func SetPhpIni(p string) error {
