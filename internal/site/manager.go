@@ -71,6 +71,18 @@ func (m *Manager) Add(sitename string, sslEnable bool) error {
 		if err = os.Mkdir(siteDir, 0755); err != nil {
 			return errors.New("unable to create site dir")
 		}
+	} else {
+		_, err = os.Stat(path.Join(siteDir, "public", "index.php"))
+		if err != nil && !errors.Is(err, fs.ErrNotExist) {
+			_, err = os.Stat(path.Join(siteDir, "public", "index.html"))
+			if err != nil && !errors.Is(err, fs.ErrNotExist) {
+				// do nothing
+			} else {
+				siteDir = path.Join(siteDir, "public")
+			}
+		} else {
+			siteDir = path.Join(siteDir, "public")
+		}
 	}
 
 	confFileValue := []byte(SiteVHostStub(siteDir, sitename, m.selectedPHPDir))
