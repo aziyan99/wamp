@@ -31,25 +31,23 @@ Yet another tool for managing a local WAMP (Windows, Apache, MySQL, PHP) develop
 
     - **For a development build:**
       ```sh
-      .\built.bat dev
+      built.bat dev
       ```
       This will create `build\wamp-dev.exe`.
 
     - **For a production build:**
       ```sh
-      .\built.bat prod
+      built.bat prod
       ```
       This will create `build\wamp.exe`.
 
 3.  **Initialize the environment:**
     This will create the necessary directories (`bin`, `www`, `tmp`).
     ```sh
-    .\build\wamp.exe init
+    build\wamp.exe init
     ```
 
-### Portability
-
-The compiled `wamp.exe` is a standalone executable. You can move it to any directory on your system (e.g., `C:\wamp\`). All the files and folders that `wamp.exe` creates and manages (like `bin`, `www`, `tmp`, and configuration files) will be contained within the same directory as the executable. This makes the entire WAMP environment portable.
+The compiled `wamp.exe` is a standalone executable. You can move it to any directory on your system (e.g., `C:\wamp\`). All the files and folders that `wamp.exe` creates and manages (like `bin`, `www`, `tmp`, and configuration files) will be contained within the same directory as the executable. This makes the entire WAMP environment portable. If it is still not working, sometimes stop-start the apache again or close-open the browser fix it.
 
 
 ## Usage
@@ -60,46 +58,46 @@ All commands are run from the directory containing `wamp.exe`.
 
 - **Initialize Application:**
   ```sh
-  ./wamp.exe init
+  wamp.exe init
   ```
 
 - **Install Services:**
   ```sh
-  ./wamp.exe install
+  wamp.exe install
   ```
 
 - **Uninstall Services:**
   ```sh
-  ./wamp.exe uninstall
+  wamp.exe uninstall
   ```
 
 ### Service Management
 
 - **Start Apache:**
   ```sh
-  ./wamp.exe apache start
+  wamp.exe apache start
   ```
 
 - **Stop Apache:**
   ```sh
-  ./wamp.exe apache stop
+  wamp.exe apache stop
   ```
 
 - **Start MySQL:**
   ```sh
-  ./wamp.exe mysql start
+  wamp.exe mysql start
   ```
 
 - **Stop MySQL:**
   ```sh
-  ./wamp.exe mysql stop
+  wamp.exe mysql stop
   ```
 
 ### Site (Virtual Host) Management
 
 - **Add a Site:**
   ```sh
-  ./wamp.exe site add <site-name> [--php <version>] [--ssl]
+  wamp.exe site add <site-name> [--php <version>] [--ssl]
   ```
   - `<site-name>`: The desired local domain (e.g., `my-project.test`).
   - `--php` (or `-p`): Specify the PHP version to use (e.g., `php-8.3`). Defaults to `php-8.3`.
@@ -107,12 +105,12 @@ All commands are run from the directory containing `wamp.exe`.
 
   **Example:**
   ```sh
-  ./wamp.exe site add my-laravel-app.test --php php-8.2 --ssl true
+  wamp.exe site add my-laravel-app.test --php php-8.2 --ssl true
   ```
 
 - **Remove a Site:**
   ```sh
-  ./wamp.exe site rm <site-name>
+  wamp.exe site rm <site-name>
   ```
 
 ### PHP Management
@@ -120,11 +118,11 @@ All commands are run from the directory containing `wamp.exe`.
 - **Install a PHP Version:**
   Downloads and installs a specific version of PHP.
   ```sh
-  ./wamp.exe php install <full-version-name>
+  wamp.exe php install <full-version-name>
   ```
   **Example:**
   ```sh
-  ./wamp.exe php install php-8.4.9-nts-Win32-vs17-x64
+  wamp.exe php install php-8.4.9-nts-Win32-vs17-x64
   ```
 
 ## Configuration
@@ -138,6 +136,8 @@ active = apache-2.4
 [mysql]
 active = mysql-8.0
 ```
+
+Sometime SSL cert not working, to solve that clear the SSL cache in: Control Panels > Internet Options > Content > Clear SSL State
 
 ## Contributing
 
