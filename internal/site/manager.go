@@ -41,13 +41,9 @@ func (m *Manager) Add(sitename string, sslEnable bool) error {
 		return err
 	}
 
-	if isDirSiteExists {
-		return errors.New("site dir exists")
-	}
-
 	_, err = os.Stat(siteConf)
-	if err == nil {
-		return errors.New("site dir exists")
+	if err == nil && isDirSiteExists {
+		return errors.New("site exists")
 	}
 
 	isPHPExists, err := util.DirExists(m.selectedPHPDir)
@@ -71,8 +67,10 @@ func (m *Manager) Add(sitename string, sslEnable bool) error {
 		}
 	}
 
-	if err = os.Mkdir(siteDir, 0755); err != nil {
-		return errors.New("unable to create site dir")
+	if !isDirSiteExists {
+		if err = os.Mkdir(siteDir, 0755); err != nil {
+			return errors.New("unable to create site dir")
+		}
 	}
 
 	confFileValue := []byte(SiteVHostStub(siteDir, sitename, m.selectedPHPDir))
