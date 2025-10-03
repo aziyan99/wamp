@@ -271,6 +271,22 @@ func (m *Manager) Install() error {
 
 	util.PrintLog("INFO").Println("hostsrw installed")
 
+	util.PrintLog("INFO").Println("Downloading corn...")
+	err = util.DownloadFile(path.Join(m.binDir, "etc", "corn.exe"), "https://github.com/aziyan99/corn/releases/download/v0.1.0/corn.exe")
+	if err != nil {
+		return err
+	}
+
+	if _, err := os.Stat(path.Join(m.binDir, "etc", "corntab")); err != nil && errors.Is(err, fs.ErrNotExist) {
+		util.PrintLog("INFO").Println("Setup corntab file...")
+		corntabConf := []byte(util.CornConfig())
+		if err = os.WriteFile(path.Join(m.binDir, "etc", "corntab"), corntabConf, 0755); err != nil {
+			return err
+		}
+	}
+
+	util.PrintLog("INFO").Println("corn installed")
+
 	// install composer: https://getcomposer.org/download/latest-stable/composer.phar
 	util.PrintLog("INFO").Println("Installing composer...")
 	err = util.DownloadFile(path.Join(m.binDir, "etc", "composer.phar"), "https://getcomposer.org/download/latest-stable/composer.phar")
