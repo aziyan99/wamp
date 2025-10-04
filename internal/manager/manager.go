@@ -69,7 +69,11 @@ func (m *Manager) Stop() error {
 
 	process, err := os.FindProcess(pidInt)
 	if err != nil {
-		return err
+		if err = os.Remove(path.Join(m.tmpDir, m.name+"_pid")); err != nil {
+			return err
+		}
+
+		return nil
 	}
 
 	if err = process.Kill(); err != nil {
