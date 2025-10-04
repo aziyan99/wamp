@@ -28,10 +28,10 @@ ECHO Building for '%BUILD_ENV%' environment...
 :: Build for the 'dev' environment.
 IF /I "%BUILD_ENV%"=="dev" (
     ECHO Compiling with debug symbols...
-    go build -o "%~dp0build\%OUTPUT_NAME%-dev.exe" "%MAIN_FILE%"
+    go build -o "%~dp0.build\%OUTPUT_NAME%-dev.exe" "%MAIN_FILE%"
     IF %ERRORLEVEL% EQU 0 (
         ECHO.
-        ECHO Development build successful! Output: build\%OUTPUT_NAME%-dev.exe
+        ECHO Development build successful! Output: .build\%OUTPUT_NAME%-dev.exe
     ) ELSE (
         ECHO.
         ECHO Development build FAILED.
@@ -43,10 +43,10 @@ IF /I "%BUILD_ENV%"=="dev" (
 IF /I "%BUILD_ENV%"=="prod" (
     ECHO Compiling and optimizing for production...
     :: -ldflags="-s -w" strips debug information to reduce the binary size.
-    go build -ldflags="-s -w" -o "%~dp0build\%OUTPUT_NAME%.exe" "%MAIN_FILE%"
+    go build -ldflags="-s -w" -o "%~dp0.build\%OUTPUT_NAME%.exe" "%MAIN_FILE%"
     IF %ERRORLEVEL% EQU 0 (
         ECHO.
-        ECHO Production build successful! Output: build\%OUTPUT_NAME%.exe
+        ECHO Production build successful! Output: .build\%OUTPUT_NAME%.exe
     ) ELSE (
         ECHO.
         ECHO Production build FAILED.
